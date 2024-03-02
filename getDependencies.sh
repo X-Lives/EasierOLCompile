@@ -8,6 +8,7 @@ sudo apt-get install -y  \
 	rsync \
 	wget \
 	unzip \
+	zstd \
 	git \
 	imagemagick \
 	xclip \
@@ -16,6 +17,8 @@ sudo apt-get install -y  \
 	libsdl1.2-dev \
 	mingw-w64 \
 	build-essential \
+	libfreetype-dev \
+	libbrotli-dev \
 
 
 mkdir -p dependencies
@@ -73,7 +76,24 @@ fi
 
 # Getting discord_game_sdk
 if [ ! -d discord_game_sdk ]; then
-	wget https://dl-game-sdk.discordapp.net/3.2.1/discord_game_sdk.zip
+	wget https://github.com/X-Lives/EasierOLCompile/releases/download/Releases/discord_game_sdk.zip
 	unzip -d discord_game_sdk discord_game_sdk.zip
 	rm discord_game_sdk.zip
+fi
+
+# freetype lib for linux-windows cross compile
+if [ ! -d freetype* ]; then
+	pushd .
+	wget https://sourceforge.net/projects/freetype/files/freetype2/2.13.2/freetype-2.13.2.tar.gz/download -O- | tar xfz -
+	cd freetype*
+	./configure \
+		--host=i686-w64-mingw32 \
+		--prefix=/usr/i686-w64-mingw32 \
+		--with-bzip2=no \
+		--with-brotli=no \
+		CPPFLAGS="-I/usr/i686-w64-mingw32/include" \
+		LDFLAGS="-L/usr/i686-w64-mingw32/lib"
+	make
+	sudo make install
+	popd
 fi

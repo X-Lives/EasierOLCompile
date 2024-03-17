@@ -7,6 +7,7 @@ sudo apt-get update
 sudo apt-get install -y  \
 	rsync \
 	wget \
+ 	zip \
 	unzip \
 	zstd \
 	git \

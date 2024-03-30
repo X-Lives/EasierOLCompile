@@ -53,15 +53,18 @@ done
 while [[ "${EOLC_ds_ok}" != 1 ]];do
     EOLC_ds=1
     read -p "EOLC_Download_Source[1:Github|2:Gitee|ENTER:Github]: " EOLC_ds_read
-    if [[ "${EOLC_ds_read}" = 1 ]] || [[ "${EOLC_ds_read}" = 12 ]];then
+    if [ -n "${EOLC_ds_read}" ];then
+        # if not empty.
         EOLC_ds=${EOLC_ds_read}
+    fi
+    if [[ "${EOLC_ds}" == 1 ]] || [[ "${EOLC_ds}" == 2 ]];then
         EOLC_ds_ok=1
     else
-        echo -e "\033[31mError: ${EOLC_ds_read} is not the valid number!\033[0m"
+        echo -e "\033[31mError: ${EOLC_ds} is not the valid number!\033[0m"
     fi
 done
-if [[ "${EOLC_ds_read}" = 1 ]];then
-    EOLC_ds_link="https://github.com/X-Lives/EasierOLCompile"
+if [[ "${EOLC_ds}" == 1 ]];then
+    EOLC_ds_link="https://github.com/X-Lives/EasierOLCompile.git"
     SPEEDEDUP_LINK=""
     CODE_REPO="https://github.com/X-Lives/X-Lives.git"
     CODE_BRANCH=""
@@ -69,7 +72,7 @@ if [[ "${EOLC_ds_read}" = 1 ]];then
     DATA_BRANCH=""
     GEMS_REPO="https://github.com/X-Lives/X-minorGems.git"
     GEMS_BRANCH=""
-if [[ "${EOLC_ds_read}" = 2 ]];then
+elif [[ "${EOLC_ds}" == 2 ]];then
     EOLC_ds_link=""
 fi
 
@@ -77,9 +80,10 @@ echo ""
 echo "---------------------------"
 echo "EOLC_Directory: ${EOLC_dir}"
 echo "EOLC_Download_Source: ${EOLC_ds}"
+echo "EOLC_link: ${EOLC_ds_link}"
 echo "---------------------------"
 read -p "OK?[ENTER:next]"
-echo "Will start..."
+echo "\033[32mWill start...\033[0m"
 read -t 1 -p "5s"
 read -t 1 -p "4s"
 read -t 1 -p "3s"
@@ -90,12 +94,16 @@ echo ""
 echo ""
 
 sudo apt-get update
+echo ""
 sudo apt-get install -y git
+echo ""
 cd "${EOLC_dir}"
 git clone "${EOLC_ds_link}" miniOneLifeCompile
 cd miniOneLifeCompile
 echo "&{EOLC_time}" > CREATETIME
 chmod +x getDependencies.sh
 chmod +x cloneRepos.sh
+echo ""
 ./getDependencies.sh
+echo ""
 ./cloneRepos.sh

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EOLC_version=$(cat https://github.com/X-Lives/EasierOLCompile/raw/main/VERSION)
+EOLC_version=$(curl https://github.com/X-Lives/EasierOLCompile/raw/main/VERSION)
 if [[ $EOLC_time == "" ]];then
     EOLC_time=$(date "+%Y-%m-%d %H:%M:%S")
 fi

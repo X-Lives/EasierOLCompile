@@ -100,7 +100,7 @@ echo ""
 cd "${EOLC_dir}"
 git clone "${EOLC_ds_link}" miniOneLifeCompile
 cd miniOneLifeCompile
-echo "&{EOLC_time}" > CREATETIME
+echo "${EOLC_time}" > CREATETIME
 chmod +x getDependencies.sh
 chmod +x cloneRepos.sh
 echo ""

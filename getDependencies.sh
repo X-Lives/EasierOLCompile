@@ -2,12 +2,17 @@
 set -ex
 cd "$(dirname "${0}")/.."
 
-sudo apt-get update
+if [[ ${ELOC_install} != 1 ]];then
+	echo -e "\033[43;37m --- apt-get update --- \033[0m"
+	sudo apt-get update
+	echo -e "\033[42;37m --- Done to update --- \033[0m"
+fi
 
+echo -e "\033[43;37m --- apt-get runlib --- \033[0m"
 sudo apt-get install -y  \
 	rsync \
 	wget \
- 	zip \
+	zip \
 	unzip \
 	zstd \
 	git \
@@ -21,12 +26,16 @@ sudo apt-get install -y  \
 	libfreetype-dev \
 	libbrotli-dev \
 
+echo -e "\033[42;37m --- Done to runlib --- \033[0m"
 
+echo -e "\033[43;37m --- Dowload depend --- \033[0m"
 mkdir -p dependencies
 cd dependencies
 
 # Getting SDL
 if [ ! -d SDL* ]; then
+	echo ""
+	echo -e "\033[32m SDL \033[0m"
 	pushd .
 	wget https://www.libsdl.org/release/SDL-1.2.15.tar.gz -O- | tar xfz -
 	cd SDL*
@@ -41,10 +50,13 @@ if [ ! -d SDL* ]; then
 	make
 	sudo make install
 	popd
+	echo -e "\033[32m Done \033[0m"
 fi
 
 # Getting zlib
 if [ ! -d zlib* ]; then
+	echo ""
+	echo -e "\033[32m ZLIB \033[0m"
 	pushd .
 	wget http://zlib.net/fossils/zlib-1.2.12.tar.gz -O- | tar xfz -
 	cd zlib*
@@ -58,10 +70,13 @@ if [ ! -d zlib* ]; then
 		PREFIX=$host- \
 		install
 	popd
+	echo -e "\033[32m Done \033[0m"
 fi
 
 # Getting libpng
 if [ ! -d l*png* ]; then
+	echo ""
+	echo -e "\033[32m LIBPNG \033[0m"
 	pushd .
 	wget http://downloads.sourceforge.net/project/libpng/libpng16/1.6.37/libpng-1.6.37.tar.gz -O- | tar xfz -
 	cd l*png*
@@ -73,17 +88,23 @@ if [ ! -d l*png* ]; then
 	make
 	sudo make install
 	popd
+	echo -e "\033[32m Done \033[0m"
 fi
 
 # Getting discord_game_sdk
 if [ ! -d discord_game_sdk ]; then
+	echo ""
+	echo -e "\033[32m DISCORD_GAME_SDK \033[0m"
 	wget https://github.com/X-Lives/EasierOLCompile/releases/download/Releases/discord_game_sdk.zip
 	unzip -d discord_game_sdk discord_game_sdk.zip
 	rm discord_game_sdk.zip
+	echo -e "\033[32m Done \033[0m"
 fi
 
 # freetype lib for linux-windows cross compile
 if [ ! -d freetype* ]; then
+	echo ""
+	echo -e "\033[32m FREETYPE \033[0m"
 	pushd .
 	wget https://sourceforge.net/projects/freetype/files/freetype2/2.13.2/freetype-2.13.2.tar.gz/download -O- | tar xfz -
 	cd freetype*
@@ -97,4 +118,7 @@ if [ ! -d freetype* ]; then
 	make
 	sudo make install
 	popd
+	echo -e "\033[32m Done \033[0m"
 fi
+
+echo -e "\033[42;37m --- Done to depend --- \033[0m"

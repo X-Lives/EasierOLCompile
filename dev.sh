@@ -34,7 +34,7 @@ while [[ "${PLATFORM_DEV_ok}" != 1 ]];do
         # if not empty.
         PLATFORM_DEV=${PLATFORM_DEV_read}
     fi
-    if [[ $EPLATFORM_DEV !> 5 ]]; then
+    if [[ $EPLATFORM_DEV < 6 ]]; then
         PLATFORM_DEV_ok=1
     else
         echo -e "\033[31mError: ${PLATFORM_DEV} is not the valid number!\033[0m"

@@ -97,6 +97,12 @@ Clear ALL the remotes and branches from a local repo.
 `./repo/ensureClean.sh` `[repo: OneLife / OneLifeData7 / minorGems]`  
 Check if the repos are clean, if not, prompt to reset them.
 
+`./repo/forceClean.sh` `[repo]`  
+Reset the repos.
+
+`./repo/freeLockedRepo.sh` `[repo]`  
+Sometimes repos are locked, this seems to unfreeze them.
+
 `./repo/makeFullGameFolderForRelease.sh.sh` `[1: for Linux | 5: for Windows (default)]`  
 Do a full copy of the game asset folders and the game to make a complete game folder ready for release, or for diffBundle to create the patches for autoupdate.
 
@@ -130,3 +136,7 @@ More information on the how to compile this game:
 [Some old scripts to compile 2HOL](https://github.com/twohoursonelife/2HOL)
 
 [Hetuw's compile scripts](https://github.com/hetuw/OneLife/tree/master/scripts/hetuwScripts)
+
+[Dopey's server setup guide](https://discord.com/channels/423293333864054833/1021330461865291796/1021337048747094026)
+
+[Community Crucible Mod (CCM)'s build scripts](https://github.com/twohoursonelife/archive-build-tools/tree/master/scripts)

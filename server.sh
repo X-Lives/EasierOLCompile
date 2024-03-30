@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+AUTORUN=$(cat AUTORUN)
 PLATFORM=$(cat PLATFORM_OVERRIDE)
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then PLATFORM=${1-1}; fi
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then
@@ -54,5 +55,4 @@ if [[ $PLATFORM == 5 ]]; then mv ${COMPILE_ROOT}/OneLife/server/OneLifeServer.ex
 if [[ $PLATFORM == 1 ]]; then mv ${COMPILE_ROOT}/OneLife/server/OneLifeServer .; fi
 
 popd
-# ./runServer.sh
-echo "Compile Server Done"
+if [[ $AUTORUN == 1 ]]; then ./runServer.sh; fi

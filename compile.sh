@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+AUTORUN=$(cat AUTORUN)
 PLATFORM=$(cat PLATFORM_OVERRIDE)
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then PLATFORM=${1-5}; fi
 if [[ $PLATFORM > 5 ]]; then
@@ -76,14 +77,17 @@ fi
 ##### Copy to Game Folder and Run
 if [[ $PLATFORM == 5 ]]; then
 	rm -f OneLife.exe
-	cp ${COMPILE_ROOT}/OneLife/gameSource/OneLife.exe .
-	#rm ../OneLife/gameSource/OneLife.exe # this causes it to wait ~15s without any reason!
-	# echo "Starting OneLife.exe"
-	# cmd.exe /c OneLife.exe
+	cp ../OneLife/gameSource/OneLife.exe .
+	if [[ $AUTORUN == 1 ]]; then
+        echo "Starting OneLife"
+        cmd.exe /c OneLife.exe
+    fi
 fi
 if [[ $PLATFORM == 1 ]]; then
-	cp ${COMPILE_ROOT}/OneLife/gameSource/OneLife .
-	# echo "Starting OneLife"
-	# ./OneLife
+	mv -f ../OneLife/gameSource/OneLife .
+	if [[ $AUTORUN == 1 ]]; then
+        echo "Starting OneLife"
+        ./OneLife
+    fi
 fi
 echo "Compile Done!"

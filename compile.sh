@@ -2,6 +2,8 @@
 set -e
 AUTORUN=$(cat AUTORUN)
 PLATFORM=$(cat PLATFORM_OVERRIDE)
+DATA_NAME=$(cat DATA_NAME)
+GAME_NAME=$(cat GAME_NAME)
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then PLATFORM=${1-5}; fi
 if [[ $PLATFORM > 5 ]]; then
 	echo "Usage: 1 for Linux, 2 for Mac, 3 for Windows on mingw, 4 for Raspberry, 5 for XCompiling for Windows (Default)"
@@ -19,11 +21,11 @@ elif [[ $PLATFORM == 4 ]]; then
 elif [[ $PLATFORM == 5 ]]; then
     TARGET_PATH="${COMPILE_ROOT}/output/windows/client"
 fi
-DISCORD_SDK_PATH="$COMPILE_ROOT/dependencies/discord_game_sdk"
-MINOR_GEMS_PATH="$COMPILE_ROOT/minorGems"
+DISCORD_SDK_PATH="${COMPILE_ROOT}/dependencies/discord_game_sdk"
+MINOR_GEMS_PATH="${COMPILE_ROOT}/${GAME_NAME}/minorGems"
 
 ##### Configure and Make
-cd OneLife
+cd ${GAME_NAME}/OneLife
 if [ -d $DISCORD_SDK_PATH ]; then
 	./configure $PLATFORM "$MINOR_GEMS_PATH" --discord_sdk_path "${DISCORD_SDK_PATH}"
 else
@@ -33,7 +35,7 @@ cd gameSource
 if [[ $PLATFORM == 5 ]]; then export PATH="/usr/i686-w64-mingw32/bin:${PATH}"; fi
 make
 
-cd ../..
+cd ../../..
 
 
 ##### Create Game Folder
@@ -42,24 +44,24 @@ cd ${TARGET_PATH}
 
 FOLDERS="animations categories ground music objects sounds sprites transitions"
 TARGET="."
-LINK="${COMPILE_ROOT}/OneLifeData7"
+LINK="${COMPILE_ROOT}/DATA/${DATA_NAME}"
 ${COMPILE_ROOT}/miniOneLifeCompile/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
 
 FOLDERS="graphics otherSounds languages"
 TARGET="."
-LINK="${COMPILE_ROOT}/OneLife/gameSource"
+LINK="${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource"
 ${COMPILE_ROOT}/miniOneLifeCompile/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
 
 
-cp -rn "${COMPILE_ROOT}/OneLife/gameSource/settings" .
-cp "${COMPILE_ROOT}/OneLife/gameSource/reverbImpulseResponse.aiff" .
-cp "${COMPILE_ROOT}/OneLife/server/wordList.txt" .
+cp -rn "${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource/settings" .
+cp "${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource/reverbImpulseResponse.aiff" .
+cp "${COMPILE_ROOT}/${GAME_NAME}/OneLife/server/wordList.txt" .
 
-cp "${COMPILE_ROOT}/OneLifeData7/dataVersionNumber.txt" .
+cp "${COMPILE_ROOT}/DATA/${DATA_NAME}/dataVersionNumber.txt" .
 
 # copying SDL.dll, clearCache script and discord_game_sdk library
-if [[ $PLATFORM == 5 ]] && [ ! -f SDL.dll ]; then cp "${COMPILE_ROOT}/OneLife/build/win32/SDL.dll" .; fi
-if [[ $PLATFORM == 5 ]] && [ ! -f clearCache.bat ]; then cp "${COMPILE_ROOT}/OneLife/build/win32/clearCache.bat" .; fi
+if [[ $PLATFORM == 5 ]] && [ ! -f SDL.dll ]; then cp "${COMPILE_ROOT}/${GAME_NAME}/OneLife/build/win32/SDL.dll" .; fi
+if [[ $PLATFORM == 5 ]] && [ ! -f clearCache.bat ]; then cp "${COMPILE_ROOT}/${GAME_NAME}/OneLife/build/win32/clearCache.bat" .; fi
 
 if [ -d $DISCORD_SDK_PATH ]; then
 	# windows: copy discord_game_sdk.dll into the output folder
@@ -77,14 +79,14 @@ fi
 ##### Copy to Game Folder and Run
 if [[ $PLATFORM == 5 ]]; then
 	rm -f OneLife.exe
-	cp ../OneLife/gameSource/OneLife.exe .
+	cp ../${GAME_NAME}/OneLife/gameSource/OneLife.exe .
 	if [[ $AUTORUN == 1 ]]; then
         echo "Starting OneLife"
         cmd.exe /c OneLife.exe
     fi
 fi
 if [[ $PLATFORM == 1 ]]; then
-	mv -f ../OneLife/gameSource/OneLife .
+	mv -f ../${GAME_NAME}/OneLife/gameSource/OneLife .
 	if [[ $AUTORUN == 1 ]]; then
         echo "Starting OneLife"
         ./OneLife

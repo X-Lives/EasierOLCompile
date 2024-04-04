@@ -63,7 +63,9 @@ while [[ "${EOLC_ds_ok}" != 1 ]];do
         echo -e "\033[31mError: ${EOLC_ds} is not the valid number!\033[0m"
     fi
 done
+REPO_SET=""
 if [[ "${EOLC_ds}" == 1 ]];then
+    REPO_SET=2
     EOLC_ds_link="https://github.com/X-Lives/EasierOLCompile.git"
     SPEEDEDUP_LINK=""
     CODE_REPO="https://github.com/X-Lives/X-Lives.git"
@@ -73,6 +75,7 @@ if [[ "${EOLC_ds}" == 1 ]];then
     GEMS_REPO="https://github.com/X-Lives/X-minorGems.git"
     GEMS_BRANCH=""
 elif [[ "${EOLC_ds}" == 2 ]];then
+    REPO_SET=3
     EOLC_ds_link=""
 fi
 
@@ -101,9 +104,10 @@ cd "${EOLC_dir}"
 git clone "${EOLC_ds_link}" miniOneLifeCompile
 cd miniOneLifeCompile
 echo "${EOLC_time}" > CREATETIME
+echo "0" >> AUTORUN
 chmod +x getDependencies.sh
 chmod +x cloneRepos.sh
 echo ""
 ./getDependencies.sh
 echo ""
-./cloneRepos.sh
+./cloneRepos.sh $REPO_SET

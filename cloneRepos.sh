@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-DATA_NAME=$(cat DATA_NAME)
-GAME_NAME=$(cat GAME_NAME)
+DATA_NAME=$(cat settings/DATA_NAME)
+GAME_NAME=$(cat settings/GAME_NAME)
 EOLC_cr_dir_check=0 # CloneRepos.sh Git update.
 
 cd "$(dirname "${0}")/.."

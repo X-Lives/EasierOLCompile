@@ -1,6 +1,6 @@
 #!/bin/bash
-DATA_NAME=$(cat DATA_NAME)
-GAME_NAME=$(cat GAME_NAME)
+DATA_NAME=$(cat settings/DATA_NAME)
+GAME_NAME=$(cat settings/GAME_NAME)
 pushd .
 cd "$(dirname "${0}")/..";
 

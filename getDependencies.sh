@@ -18,6 +18,7 @@ sudo apt-get install -y  \
 	git \
 	imagemagick \
 	xclip \
+	pv \
 	libglu1-mesa-dev \
 	libgl1-mesa-dev \
 	libsdl1.2-dev \

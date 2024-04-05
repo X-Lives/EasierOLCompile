@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 PLATFORM=$(cat PLATFORM_OVERRIDE)
+COMP_NAME=$(basename "$PWD")
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then PLATFORM=${1-5}; fi
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then
 	echo "Usage: 1 for Linux, 5 for XCompiling for Windows (Default)"
@@ -11,7 +12,7 @@ cd "$(dirname "${0}")/.."
 ##### Configure and Make
 COMPILE_ROOT=$(pwd)
 if [[ $PLATFORM == 1 ]]; then
-        TARGET_PATH="${COMPILE_ROOT}/output/linux/editor"
+    TARGET_PATH="${COMPILE_ROOT}/output/linux/editor"
 elif [[ PLATFORM == 2 ]]; then
 	TARGET_PATH="${COMPILE_ROOT}/output/mac/editor"
 elif [[ $PLATFORM == 4 ]]; then
@@ -36,12 +37,12 @@ cd ${TARGET_PATH}
 FOLDERS="animations categories ground music objects sounds sprites transitions"
 TARGET="."
 LINK="${COMPILE_ROOT}/OneLifeData7"
-${COMPILE_ROOT}/miniOneLifeCompile/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
+${COMPILE_ROOT}/${COMP_NAME}/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
 
 FOLDERS="graphics otherSounds languages"
 TARGET="."
 LINK="${COMPILE_ROOT}/OneLife/gameSource"
-${COMPILE_ROOT}/miniOneLifeCompile/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
+${COMPILE_ROOT}/${COMP_NAME}/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
 
 cp -rn ${COMPILE_ROOT}/OneLife/gameSource/settings .
 cp ${COMPILE_ROOT}/OneLife/gameSource/us_english_60.txt .

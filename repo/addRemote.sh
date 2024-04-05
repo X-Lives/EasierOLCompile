@@ -1,5 +1,10 @@
 #!/bin/bash
 set -e
+COMP_NAME=$(basename "$PWD")
+# Not Sure.
+if [[ ${COMP_NAME} == "" ]]; then
+    COMP_NAME=miniOneLifeCompile
+fi
 cd "$(dirname "${0}")/../.."
 
 repo=$1
@@ -7,7 +12,7 @@ remote=$2
 remoteURL=$3
 
 ### Clean repo first
-miniOneLifeCompile/repo/ensureClean.sh $repo
+${COMP_NAME}/repo/ensureClean.sh $repo
 
 ### Add remote if not exist
 git -C $repo remote show $remote > /dev/null 2>&1 && exit 0 || git -C $repo remote add $remote $remoteURL

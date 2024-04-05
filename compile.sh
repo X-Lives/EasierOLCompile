@@ -4,6 +4,7 @@ AUTORUN=$(cat AUTORUN)
 PLATFORM=$(cat PLATFORM_OVERRIDE)
 DATA_NAME=$(cat DATA_NAME)
 GAME_NAME=$(cat GAME_NAME)
+COMP_NAME=$(basename "$PWD")
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then PLATFORM=${1-5}; fi
 if [[ $PLATFORM > 5 ]]; then
 	echo "Usage: 1 for Linux, 2 for Mac, 3 for Windows on mingw, 4 for Raspberry, 5 for XCompiling for Windows (Default)"
@@ -42,15 +43,19 @@ cd ../../..
 mkdir -p ${TARGET_PATH}
 cd ${TARGET_PATH}
 
+echo ""
 FOLDERS="animations categories ground music objects sounds sprites transitions"
 TARGET="."
 LINK="${COMPILE_ROOT}/DATA/${DATA_NAME}"
-${COMPILE_ROOT}/miniOneLifeCompile/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
+echo "Copy |${FOLDERS}| in |${LINK}|..."
+${COMPILE_ROOT}/${COMP_NAME}/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
 
+echo ""
 FOLDERS="graphics otherSounds languages"
 TARGET="."
 LINK="${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource"
-${COMPILE_ROOT}/miniOneLifeCompile/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
+echo "Copy |${FOLDERS}| in |${LINK}|..."
+${COMPILE_ROOT}/${COMP_NAME}/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
 
 
 cp -rn "${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource/settings" .

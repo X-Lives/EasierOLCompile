@@ -2,6 +2,7 @@
 set -e
 AUTORUN=$(cat AUTORUN)
 PLATFORM=$(cat PLATFORM_OVERRIDE)
+COMP_NAME=$(basename "$PWD")
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then PLATFORM=${1-1}; fi
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then
 	echo "Usage: 1 for Linux (Default), 5 for XCompiling for Windows"
@@ -38,7 +39,7 @@ cd ${TARGET_PATH}
 FOLDERS="objects transitions categories tutorialMaps"
 TARGET="."
 LINK="${COMPILE_ROOT}/OneLifeData7"
-${COMPILE_ROOT}/miniOneLifeCompile/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
+${COMPILE_ROOT}/${COMP_NAME}/util/createLinks.sh $PLATFORM "$FOLDERS" $TARGET $LINK
 
 
 cp -rn ${COMPILE_ROOT}/OneLife/server/settings .

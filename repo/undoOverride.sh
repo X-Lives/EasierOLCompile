@@ -1,5 +1,10 @@
 #!/bin/bash
 set -e
+COMP_NAME=$(basename "$PWD")
+# Not Sure.
+if [[ ${COMP_NAME} == "" ]]; then
+    COMP_NAME=miniOneLifeCompile
+fi
 cd "$(dirname "${0}")/../.."
 
 repo=$1
@@ -9,9 +14,9 @@ repo=$1
 git -C $repo add .
 
 ### Loop through the override files
-for f in $(find -path "./miniOneLifeCompile/override/${repo}/*" -type f); do
+for f in $(find -path "./${COMP_NAME}/override/${repo}/*" -type f); do
     
-    old="miniOneLifeCompile/override/"$repo"/"
+    old="${COMP_NAME}/override/"$repo"/"
     new=""
     p="${f/"$old"/"$new"}"
     

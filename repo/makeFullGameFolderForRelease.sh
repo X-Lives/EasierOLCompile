@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 PLATFORM=$(cat PLATFORM_OVERRIDE)
+COMP_NAME=$(basename "$PWD")
+# Not Sure.
+if [[ ${COMP_NAME} == "" ]]; then
+    COMP_NAME=miniOneLifeCompile
+fi
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then PLATFORM=${1-5}; fi
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then
 	echo "Usage: 1 for Linux, 5 for XCompiling for Windows (Default)"
@@ -101,7 +106,7 @@ fi
 
 
 ###### Compile the Game Exe
-cd ../miniOneLifeCompile
+cd ../${COMP_NAME}
 ./cleanOldBuildsAndOptionallyCaches.sh 1
 ./applyFixesAndOverride.sh
 cd ..

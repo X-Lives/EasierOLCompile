@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
-PLATFORM=$(cat PLATFORM_OVERRIDE)
+PLATFORM=$(cat settings/PLATFORM_OVERRIDE)
+GAME_NAME=$(cat settings/GAME_NAME)
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then PLATFORM=${1-1}; fi
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then
 	echo "Usage: 1 for Linux (Default), 5 for XCompiling for Windows"

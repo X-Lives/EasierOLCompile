@@ -103,8 +103,10 @@ echo ""
 cd "${EOLC_dir}"
 git clone "${EOLC_ds_link}" miniOneLifeCompile
 cd miniOneLifeCompile
+cd settings
 echo "${EOLC_time}" > CREATETIME
 echo "0" >> AUTORUN
+cd ..
 chmod +x getDependencies.sh
 chmod +x cloneRepos.sh
 echo ""

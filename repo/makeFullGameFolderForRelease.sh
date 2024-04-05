@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
-PLATFORM=$(cat PLATFORM_OVERRIDE)
-DATA_NAME=$(cat DATA_NAME)
-GAME_NAME=$(cat GAME_NAME)
+PLATFORM=$(cat settings/PLATFORM_OVERRIDE)
+DATA_NAME=$(cat settings/DATA_NAME)
+GAME_NAME=$(cat settings/GAME_NAME)
 COMP_NAME=$(basename "$PWD")
 # Not Sure.
 if [[ ${COMP_NAME} == "" ]]; then

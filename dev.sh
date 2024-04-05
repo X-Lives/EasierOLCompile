@@ -2,7 +2,7 @@
 set -e
 
 EOLC_version=$(curl https://raw.githubusercontent.com/X-Lives/EasierOLCompile/main/VERSION)
-EOLC_time=$(cat CREATETIME)
+EOLC_time=$(cat settings/CREATETIME)
 if [[ $EOLC_time == "" ]];then
     EOLC_time=$(date "+%Y-%m-%d %H:%M:%S")
 fi

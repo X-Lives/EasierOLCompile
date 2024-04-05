@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
-AUTORUN=$(cat AUTORUN)
-PLATFORM=$(cat PLATFORM_OVERRIDE)
-DATA_NAME=$(cat DATA_NAME)
-GAME_NAME=$(cat GAME_NAME)
+AUTORUN=$(cat settings/AUTORUN)
+PLATFORM=$(cat settings/PLATFORM_OVERRIDE)
+DATA_NAME=$(cat settings/DATA_NAME)
+GAME_NAME=$(cat settings/GAME_NAME)
 COMP_NAME=$(basename "$PWD")
 if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then PLATFORM=${1-5}; fi
 if [[ $PLATFORM > 5 ]]; then

@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 PLATFORM=$(cat PLATFORM_OVERRIDE)
+DATA_NAME=$(cat DATA_NAME)
+GAME_NAME=$(cat GAME_NAME)
 COMP_NAME=$(basename "$PWD")
 # Not Sure.
 if [[ ${COMP_NAME} == "" ]]; then
@@ -17,13 +19,13 @@ cd "$(dirname "${0}")/../.."
 ###### Paths Required by Discord SDK
 COMPILE_ROOT=$(pwd)
 DISCORD_SDK_PATH="$COMPILE_ROOT/dependencies/discord_game_sdk"
-MINOR_GEMS_PATH="$COMPILE_ROOT/minorGems"
+MINOR_GEMS_PATH="$COMPILE_ROOT/${GAME_NAME}/minorGems"
 
 
 ###### Name the Release Folder
 version=$(<OneLifeData7/dataVersionNumber.txt)
-if [[ $PLATFORM == 1 ]]; then outputName="2HOL_v${version}_linux"; fi
-if [[ $PLATFORM == 5 ]]; then outputName="2HOL_v${version}_win"; fi
+if [[ $PLATFORM == 1 ]]; then outputName="${GAME_NAME}_v${version}_linux"; fi
+if [[ $PLATFORM == 5 ]]; then outputName="${GAME_NAME}_v${version}_win"; fi
 
 mkdir -p $outputName
 cd $outputName
@@ -35,11 +37,11 @@ folderList=()
 
 temp="animations categories ground music objects sounds sprites transitions"
 for f in $temp; do folderList+=( "$f" ); done;
-for f in $temp; do pathList+=( "../OneLifeData7/$f" ); done;
+for f in $temp; do pathList+=( "../DATA/${DATA_NAME}/$f" ); done;
 
 temp="graphics otherSounds languages settings"
 for f in $temp; do folderList+=( "$f" ); done;
-for f in $temp; do pathList+=( "../OneLife/gameSource/$f" ); done;
+for f in $temp; do pathList+=( "../${GAME_NAME}/OneLife/gameSource/$f" ); done;
 
 for i in ${!pathList[@]}; do
     
@@ -63,22 +65,22 @@ done;
 
 
 ###### Copy Data Version and other files
-cp ../OneLife/gameSource/language.txt .
-cp ../OneLife/gameSource/us_english_60.txt .
-cp ../OneLife/documentation/Readme.txt .
-cp ../OneLife/no_copyright.txt .
-cp ../OneLife/gameSource/reverbImpulseResponse.aiff .
-cp ../OneLife/server/wordList.txt .
+cp ../${GAME_NAME}/OneLife/gameSource/language.txt .
+cp ../${GAME_NAME}/OneLife/gameSource/us_english_60.txt .
+cp ../${GAME_NAME}/OneLife/documentation/Readme.txt .
+cp ../${GAME_NAME}/OneLife/no_copyright.txt .
+cp ../${GAME_NAME}/OneLife/gameSource/reverbImpulseResponse.aiff .
+cp ../${GAME_NAME}/OneLife/server/wordList.txt .
 
 d=$(TZ=":GMT" date)
 echo "$1 built on $d" > binary.txt
 
-cp ../OneLifeData7/dataVersionNumber.txt .
+cp ../DATA/${DATA_NAME}/dataVersionNumber.txt .
 
 
 ###### SDL and clearCache script
-if [[ $PLATFORM == 5 ]] && [ ! -f SDL.dll ]; then cp ../OneLife/build/win32/SDL.dll .; fi
-if [[ $PLATFORM == 5 ]] && [ ! -f clearCache.bat ]; then cp ../OneLife/build/win32/clearCache.bat .; fi
+if [[ $PLATFORM == 5 ]] && [ ! -f SDL.dll ]; then cp ../${GAME_NAME}/OneLife/build/win32/SDL.dll .; fi
+if [[ $PLATFORM == 5 ]] && [ ! -f clearCache.bat ]; then cp ../${GAME_NAME}/OneLife/build/win32/clearCache.bat .; fi
 
 
 ###### Change EOL
@@ -87,8 +89,8 @@ if [[ $PLATFORM == 1 ]]; then
 fi
 
 if [[ $PLATFORM == 5 ]]; then
-    cp ../OneLife/build/unix2dos.c .
-    cp ../OneLife/build/unix2dosScript .
+    cp ../${GAME_NAME}/OneLife/build/unix2dos.c .
+    cp ../${GAME_NAME}/OneLife/build/unix2dosScript .
     g++ -o unix2dos unix2dos.c
 
     find . -type f -name 'unix2dosScript' -exec sed -i 's/\r//g' {} +
@@ -111,7 +113,7 @@ cd ../${COMP_NAME}
 ./applyFixesAndOverride.sh
 cd ..
 
-cd OneLife
+cd ${GAME_NAME}/OneLife
 if [ -d $DISCORD_SDK_PATH ]; then
 	./configure $PLATFORM "$MINOR_GEMS_PATH" --discord_sdk_path "${DISCORD_SDK_PATH}"
 else
@@ -120,7 +122,7 @@ fi
 cd gameSource
 if [[ $PLATFORM == 5 ]]; then export PATH="/usr/i686-w64-mingw32/bin:${PATH}"; fi
 make
-cd ../..
+cd ../../..
 cd $outputName
 
 
@@ -140,9 +142,9 @@ fi
 
 ###### Copy to Game Folder
 if [[ $PLATFORM == 1 ]]; then
-    mv -f ../OneLife/gameSource/OneLife .
+    mv -f ../${GAME_NAME}/OneLife/gameSource/OneLife .
 fi
 
 if [[ $PLATFORM == 5 ]]; then
-    mv -f ../OneLife/gameSource/OneLife.exe .
+    mv -f ../${GAME_NAME}/OneLife/gameSource/OneLife.exe .
 fi

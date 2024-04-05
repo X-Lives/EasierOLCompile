@@ -9,9 +9,9 @@ fi
 cd "$(dirname "${0}")/.."
 COMPILE_ROOT=$(pwd)
 if [[ $PLATFORM == 1 ]]; then
-        TARGET_PATH="${COMPILE_ROOT}/output/linux/server"
+        TARGET_PATH="${COMPILE_ROOT}/output/linux/server_${GAME_NAME}"
 else
-        TARGET_PATH="${COMPILE_ROOT}/output/windows/server"
+        TARGET_PATH="${COMPILE_ROOT}/output/windows/server_${GAME_NAME}"
 fi
 
 cd ${TARGET_PATH}

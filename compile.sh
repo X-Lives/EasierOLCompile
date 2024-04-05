@@ -14,13 +14,13 @@ cd "$(dirname "${0}")/.."
 
 COMPILE_ROOT=$(pwd)
 if [[ $PLATFORM == 1 ]]; then
-    TARGET_PATH="${COMPILE_ROOT}/output/linux/client"
-elif [[ PLATFORM == 2 ]]; then
-	TARGET_PATH="${COMPILE_ROOT}/output/mac/client"
+    TARGET_PATH="${COMPILE_ROOT}/output/linux/client_${GAME_NAME}"
+elif [[ $PLATFORM == 2 ]]; then
+	TARGET_PATH="${COMPILE_ROOT}/output/mac/client_${GAME_NAME}"
 elif [[ $PLATFORM == 4 ]]; then
-	TARGET_PATH="${COMPILE_ROOT}/output/raspberry/client"
+	TARGET_PATH="${COMPILE_ROOT}/output/raspberry/client_${GAME_NAME}"
 elif [[ $PLATFORM == 5 ]]; then
-    TARGET_PATH="${COMPILE_ROOT}/output/windows/client"
+    TARGET_PATH="${COMPILE_ROOT}/output/windows/client_${GAME_NAME}"
 fi
 DISCORD_SDK_PATH="${COMPILE_ROOT}/dependencies/discord_game_sdk"
 MINOR_GEMS_PATH="${COMPILE_ROOT}/${GAME_NAME}/minorGems"
@@ -84,14 +84,14 @@ fi
 ##### Copy to Game Folder and Run
 if [[ $PLATFORM == 5 ]]; then
 	rm -f OneLife.exe
-	cp ../${GAME_NAME}/OneLife/gameSource/OneLife.exe .
+	cp ${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource/OneLife.exe .
 	if [[ $AUTORUN == 1 ]]; then
         echo "Starting OneLife"
         cmd.exe /c OneLife.exe
     fi
 fi
 if [[ $PLATFORM == 1 ]]; then
-	mv -f ../${GAME_NAME}/OneLife/gameSource/OneLife .
+	mv -f ${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource/OneLife .
 	if [[ $AUTORUN == 1 ]]; then
         echo "Starting OneLife"
         ./OneLife

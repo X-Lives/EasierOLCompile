@@ -13,13 +13,13 @@ cd "$(dirname "${0}")/.."
 
 COMPILE_ROOT=$(pwd)
 if [[ $PLATFORM == 1 ]]; then
-    TARGET_PATH="${COMPILE_ROOT}/output/linux/client_pr${GAME_NAME}"
+    TARGET_PATH="${COMPILE_ROOT}/output/linux/PROGRAM"
 elif [[ $PLATFORM == 2 ]]; then
-	TARGET_PATH="${COMPILE_ROOT}/output/mac/client_pr${GAME_NAME}"
+	TARGET_PATH="${COMPILE_ROOT}/output/mac/PROGRAM"
 elif [[ $PLATFORM == 4 ]]; then
-	TARGET_PATH="${COMPILE_ROOT}/output/raspberry/client_pr${GAME_NAME}"
+	TARGET_PATH="${COMPILE_ROOT}/output/raspberry/PROGRAM"
 elif [[ $PLATFORM == 5 ]]; then
-    TARGET_PATH="${COMPILE_ROOT}/output/windows/client_pr${GAME_NAME}"
+    TARGET_PATH="${COMPILE_ROOT}/output/windows/PROGRAM"
 fi
 DISCORD_SDK_PATH="${COMPILE_ROOT}/dependencies/discord_game_sdk"
 MINOR_GEMS_PATH="${COMPILE_ROOT}/${GAME_NAME}/minorGems"
@@ -35,21 +35,18 @@ cd gameSource
 if [[ $PLATFORM == 5 ]]; then export PATH="/usr/i686-w64-mingw32/bin:${PATH}"; fi
 make
 
-pwd
 cd ../../..
-pwd
 
 
 ##### Create Game Folder
 mkdir -p ${TARGET_PATH}
 cd ${TARGET_PATH}
-pwd
 ##### Copy to Game Folder and Run
 if [[ $PLATFORM == 5 ]]; then
 	rm -f OneLife.exe
-	cp ${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource/OneLife.exe .
+	cp ${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource/OneLife.exe ${GAME_NAME}.exe
 fi
 if [[ $PLATFORM == 1 ]]; then
-	mv -f ${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource/OneLife .
+	mv -f ${COMPILE_ROOT}/${GAME_NAME}/OneLife/gameSource/OneLife ${GAME_NAME}
 fi
 echo "Compile_make_only Done!"

@@ -11,19 +11,21 @@ if [[ $PLATFORM != 1 ]] && [[ $PLATFORM != 5 ]]; then
 	exit 1
 fi
 
+pwd
 pushd .
-cd "$(dirname "${0}")/.."
+cd "$(dirname "${0}")/../.."
 
 ##### Configure and Make
 COMPILE_ROOT=$(pwd)
+version=$(<DATA/${DATA_NAME}/dataVersionNumber.txt)
 if [[ $PLATFORM == 1 ]]; then
-	TARGET_PATH="${COMPILE_ROOT}/output/linux/server_${GAME_NAME}"
+	TARGET_PATH="${COMPILE_ROOT}/SERVER-LIST/${GAME_NAME}_v${version}_linux"
 elif [[ $PLATFORM == 2 ]]; then
-	TARGET_PATH="${COMPILE_ROOT}/output/mac/server_${GAME_NAME}"
+	TARGET_PATH="${COMPILE_ROOT}/SERVER-LIST/${GAME_NAME}_v${version}_mac"
 elif [[ $PLATFORM == 4 ]]; then
-	TARGET_PATH="${COMPILE_ROOT}/output/raspberry/server_${GAME_NAME}"
+	TARGET_PATH="${COMPILE_ROOT}/SERVER-LIST/${GAME_NAME}_v${version}_raspberry"
 elif [[ $PLATFORM == 5 ]]; then
-    TARGET_PATH="${COMPILE_ROOT}/output/windows/server_${GAME_NAME}"
+    TARGET_PATH="${COMPILE_ROOT}/SERVER-LIST/${GAME_NAME}_v${version}_win"
 fi
 
 cd ${GAME_NAME}/OneLife/server
@@ -58,4 +60,5 @@ if [[ $PLATFORM == 5 ]]; then mv ${COMPILE_ROOT}/${GAME_NAME}/OneLife/server/One
 if [[ $PLATFORM == 1 ]]; then mv ${COMPILE_ROOT}/${GAME_NAME}/OneLife/server/OneLifeServer .; fi
 
 popd
+pwd
 if [[ $AUTORUN == 1 ]]; then ./runServer.sh; fi

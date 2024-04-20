@@ -23,7 +23,7 @@ MINOR_GEMS_PATH="$COMPILE_ROOT/${GAME_NAME}/minorGems"
 
 
 ###### Name the Release Folder
-version=$(<OneLifeData7/dataVersionNumber.txt)
+version=$(<DATA/${DATA_NAME}/dataVersionNumber.txt)
 if [[ $PLATFORM == 1 ]]; then outputName="${GAME_NAME}_v${version}_linux"; fi
 if [[ $PLATFORM == 5 ]]; then outputName="${GAME_NAME}_v${version}_win"; fi
 

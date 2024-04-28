@@ -64,14 +64,14 @@ if [[ -d "${GAME_NAME}" ]]; then
     EOLC_cr_dir_check=1
 fi
 if [[ ! -d OneLife ]]; then
-    if [ ${BRANCH} -eq 1 ]; then
+    if [[ ${BRANCH} == "1" ]]; then
         git clone -b ${CODE_BRANCH} ${SPEEDEDUP_LINK}${CODE_REPO} OneLife
     else
         git clone ${SPEEDEDUP_LINK}${CODE_REPO} OneLife
     fi
 fi
 if [[ ! -d minorGems ]]; then
-    if [ ${BRANCH} -eq 1 ]; then
+    if [[ ${BRANCH} == "1" ]]; then
         git clone -b ${GEMS_BRANCH} ${SPEEDEDUP_LINK}${GEMS_REPO} minorGems
     else
         git clone ${SPEEDEDUP_LINK}${GEMS_REPO} minorGems
@@ -83,7 +83,7 @@ mkdir -p DATA
 cd DATA
 
 if [[ ! -d "${DATA_NAME}" ]]; then
-    if [ ${BANCH} -eq 1 ]; then
+    if [[ ${BRANCH} == "1" ]]; then
         git clone -b ${DATA_BRANCH} ${SPEEDEDUP_LINK}${DATA_REPO} "${DATA_NAME}"
     else
         git clone ${SPEEDEDUP_LINK}${DATA_REPO} "${DATA_NAME}"

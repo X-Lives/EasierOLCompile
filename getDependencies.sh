@@ -1,4 +1,24 @@
 #!/bin/bash
+set -e
+if [[ $1 == "" ]];then
+    GETD_SET=""
+else
+    GETD_SET=$1
+fi
+if [[ ${GETD_SET} == "" ]]; then
+    # This if means that if this file is executed alone, with no arguments passed in, this default argument will be used.
+    SPEEDEDUP_LINK=""
+fi
+if [[ ${GETD_SET} == "" ]]; then
+    echo "--------GETD-SETUP--------"
+    read -p "Use SPEEDEDUP_LINK?[Y/N]" SPEEDEDUP_LINK_read
+    SPEEDEDUP_LINK_read=$(echo $SPEEDEDUP_LINK_read | tr '[:upper:]' '[:lower:]')
+    if [[ $SPEEDEDUP_LINK_read == *y* ]];then
+        read -p "SPEEDEDUP_LINK: " SPEEDEDUP_LINK
+    fi
+	echo "--------------------------"
+fi
+
 set -ex
 cd "$(dirname "${0}")/.."
 
@@ -96,7 +116,7 @@ fi
 if [ ! -d discord_game_sdk ]; then
 	echo ""
 	echo -e "\033[32m DISCORD_GAME_SDK \033[0m"
-	wget https://github.com/X-Lives/EasierOLCompile/releases/download/Releases/discord_game_sdk.zip
+	wget ${SPEEDEDUP_LINK}https://github.com/X-Lives/EasierOLCompile/releases/download/Releases/discord_game_sdk.zip
 	unzip -d discord_game_sdk discord_game_sdk.zip
 	rm discord_game_sdk.zip
 	echo -e "\033[32m Done \033[0m"
